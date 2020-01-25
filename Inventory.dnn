@@ -128,85 +128,13 @@
         </assembly>
       </assemblies>
     </component>
-    <component type="File">
-      <files>
-        <basePath>DesktopModules\GIBS\Inventory</basePath>
-        <file>
-          <name>Inventory.dnn</name>
-        </file>
-        <file>
-          <path>Documentation</path>
-          <name>Documentation.css</name>
-        </file>
-        <file>
-          <path>Documentation</path>
-          <name>Documentation.html</name>
-        </file>
-        <file>
-          <path>Documentation</path>
-          <name>logo.gif</name>
-        </file>
-        <file>
-          <name>InventoryReport.ascx</name>
-        </file>
-        <file>
-          <path>JavaScript</path>
-          <name>jquery.maskedinput-1.3.js</name>
-        </file>
-        <file>
-          <name>ProductCategories.ascx</name>
-        </file>
-        <file>
-          <name>Products.ascx</name>
-        </file>
-        <file>
-          <name>Style.css</name>
-        </file>
-        <file>
-          <name>Suppliers.ascx</name>
-        </file>
-        <file>
-          <path>App_LocalResources</path>
-          <name>EditInventory.ascx.resx</name>
-        </file>
-        <file>
-          <path>App_LocalResources</path>
-          <name>Settings.ascx.resx</name>
-        </file>
-        <file>
-          <path>App_LocalResources</path>
-          <name>ViewInventory.ascx.resx</name>
-        </file>
-        <file>
-          <name>Settings.ascx</name>
-        </file>
-        <file>
-          <name>TakeInventory.ascx</name>
-        </file>
-        <file>
-          <name>ViewInventory.ascx</name>
-        </file>
-        <file>
-          <path>App_LocalResources</path>
-          <name>ProductCategories.ascx.resx</name>
-        </file>
-        <file>
-          <path>App_LocalResources</path>
-          <name>Products.ascx.resx</name>
-        </file>
-        <file>
-          <path>App_LocalResources</path>
-          <name>Suppliers.ascx.resx</name>
-        </file>
-        <file>
-          <path>App_LocalResources</path>
-          <name>TakeInventory.ascx.resx</name>
-        </file>
-        <file>
-          <path>App_LocalResources</path>
-          <name>InventoryReport.ascx.resx</name>
-        </file>
-      </files>
+    <component type="ResourceFile">
+      <resourceFiles>
+        <basePath>DesktopModules/GIBS/Inventory</basePath>
+        <resourceFile>
+          <name>Resources.zip</name>
+        </resourceFile>
+      </resourceFiles>
     </component>
   </components>
 </package></packages>
