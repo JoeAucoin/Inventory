@@ -1,0 +1,65 @@
+﻿
+
+/****** Object:  StoredProcedure [dbo].[GIBS_Inventory_Report]    Script Date: 4/26/2015 2:36:10 PM ******/
+DROP PROCEDURE [dbo].[GIBS_Inventory_Report]
+GO
+
+/****** Object:  StoredProcedure [dbo].[GIBS_Inventory_Report]    Script Date: 4/26/2015 2:36:10 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE  [dbo].[GIBS_Inventory_Report] 
+( 
+	@StartDate datetime,
+	@EndDate datetime,
+	@ModuleID int
+)
+AS
+
+ 
+begin 
+
+-- DETAILS
+
+	declare @cols varchar(max)
+
+	select @cols = (
+	select distinct GIBS_Inventory.InventoryDate from GIBS_Inventory 
+	WHERE (GIBS_Inventory.InventoryDate  BETWEEN CONVERT(DATETIME, @StartDate, 102) AND CONVERT(DATETIME, @EndDate, 102)) for xml path('')  ) 
+	
+	select @cols = replace(@cols,'<InventoryDate>','[')
+	select @cols = replace(@cols,'</InventoryDate>', '],')
+	select @cols = left(@cols,len(@cols) -1)
+
+
+	declare @query varchar(max) 
+
+	select @query = 'select *
+	from 
+	(
+
+	  SELECT       GIBS_Inventory.InventoryDate, coalesce(GIBS_Inventory.ProductCount,0) AS ProductCount,  
+	  GIBS_Inventory_Products.ProductName AS [ProductName], GIBS_Inventory_Products.ProductCategoryID AS [CID], GIBS_Inventory_Products.ProductID
+	FROM            GIBS_Inventory  INNER JOIN
+							 GIBS_Inventory_Products ON GIBS_Inventory.ProductID = GIBS_Inventory_Products.ProductID
+							 WHERE GIBS_Inventory_Products.IsActive = 1 
+
+	) src
+	pivot
+	(
+	  max(ProductCount)
+	  for InventoryDate in (' + @cols + ')
+	) piv;'
+
+	--print @query
+	execute(@query)
+
+
+
+end
+GO
+
+

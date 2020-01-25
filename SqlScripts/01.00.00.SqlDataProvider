@@ -1,0 +1,1232 @@
+﻿
+
+/****** Object:  Table [dbo].[GIBS_Inventory]    Script Date: 4/22/2015 10:13:55 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[GIBS_Inventory](
+	[InventoryID] [int] IDENTITY(1,1) NOT NULL,
+	[ProductID] [int] NULL,
+	[ProductCount] [float] NULL,
+	[InventoryDate] [date] NULL,
+	[ModuleID] [int] NOT NULL,
+ CONSTRAINT [PK_GIBS_Inventory] PRIMARY KEY CLUSTERED 
+(
+	[InventoryID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+/****** Object:  Table [dbo].[GIBS_Inventory_Invoices]    Script Date: 4/22/2015 10:13:55 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[GIBS_Inventory_Invoices](
+	[InvoiceID] [int] IDENTITY(1,1) NOT NULL,
+	[InvoiceNumber] [nvarchar](50) NULL,
+	[InvoiceDate] [datetime] NULL,
+	[SupplierID] [int] NULL,
+	[ModuleID] [int] NOT NULL,
+	[CreatedOnDate] [datetime] NULL,
+	[CreatedByUserID] [int] NOT NULL,
+	[LastModifiedByUserID] [int] NULL,
+	[LastModifiedOnDate] [datetime] NULL,
+	[PortalID] [int] NULL,
+ CONSTRAINT [aaaaaGIBS_Inventory_Invoices_PK] PRIMARY KEY NONCLUSTERED 
+(
+	[InvoiceID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+/****** Object:  Table [dbo].[GIBS_Inventory_LineItems]    Script Date: 4/22/2015 10:13:55 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+SET ANSI_PADDING ON
+GO
+
+CREATE TABLE [dbo].[GIBS_Inventory_LineItems](
+	[LineItemID] [int] IDENTITY(1,1) NOT NULL,
+	[InvoiceID] [int] NOT NULL,
+	[ProductID] [int] NOT NULL,
+	[Cases] [int] NULL,
+	[CountPerCase] [int] NULL,
+	[PricePerCase] [money] NULL,
+	[WeightPerCase] [decimal](18, 2) NULL,
+	[ReportType] [varchar](20) NULL,
+ CONSTRAINT [aaaaaInventory_LineItems_PK] PRIMARY KEY NONCLUSTERED 
+(
+	[LineItemID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+SET ANSI_PADDING OFF
+GO
+
+/****** Object:  Table [dbo].[GIBS_Inventory_ProductCategory]    Script Date: 4/22/2015 10:13:55 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[GIBS_Inventory_ProductCategory](
+	[ProductCategoryID] [int] IDENTITY(1,1) NOT NULL,
+	[ProductCategory] [nvarchar](50) NULL,
+	[ModuleID] [int] NOT NULL,
+	[CreatedOnDate] [datetime] NULL,
+	[CreatedByUserID] [int] NOT NULL,
+	[LastModifiedByUserID] [int] NULL,
+	[LastModifiedOnDate] [datetime] NULL,
+	[PortalID] [int] NULL,
+ CONSTRAINT [aaaaaGIBS_Inventory_ProductCategory_PK] PRIMARY KEY NONCLUSTERED 
+(
+	[ProductCategoryID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+/****** Object:  Table [dbo].[GIBS_Inventory_Products]    Script Date: 4/22/2015 10:13:55 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[GIBS_Inventory_Products](
+	[ProductID] [int] IDENTITY(1,1) NOT NULL,
+	[ProductName] [nvarchar](500) NULL,
+	[CasePrice] [money] NULL CONSTRAINT [DF__GIBS_Inve__CaseP__0BE78B26]  DEFAULT ((0)),
+	[CaseCount] [int] NULL CONSTRAINT [DF__GIBS_Inve__CaseC__0CDBAF5F]  DEFAULT ((0)),
+	[ProductCategoryID] [int] NULL CONSTRAINT [DF__GIBS_Inve__Produ__0DCFD398]  DEFAULT ((0)),
+	[ModuleID] [int] NOT NULL,
+	[CreatedOnDate] [datetime] NULL,
+	[CreatedByUserID] [int] NOT NULL,
+	[LastModifiedByUserID] [int] NULL,
+	[LastModifiedOnDate] [datetime] NULL,
+	[PortalID] [int] NULL,
+	[CaseWeight] [decimal](18, 2) NULL,
+	[isActive] [bit] NOT NULL CONSTRAINT [DF__GIBS_Inve__isAct__31190FD5]  DEFAULT ((1)),
+ CONSTRAINT [aaaaaGIBS_Inventory_Products_PK] PRIMARY KEY NONCLUSTERED 
+(
+	[ProductID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+/****** Object:  Table [dbo].[GIBS_Inventory_Suppliers]    Script Date: 4/22/2015 10:13:55 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[GIBS_Inventory_Suppliers](
+	[SupplierID] [int] IDENTITY(1,1) NOT NULL,
+	[SupplierName] [nvarchar](50) NULL,
+	[GBInventory_] [bit] NOT NULL DEFAULT ((0)),
+	[Address] [nvarchar](50) NULL,
+	[City] [nvarchar](50) NULL,
+	[State] [nvarchar](50) NULL,
+	[Zip] [nvarchar](50) NULL,
+	[SupplierPhone] [nvarchar](50) NULL,
+	[Salesman] [nvarchar](50) NULL,
+	[SalesmanPhone] [nvarchar](50) NULL,
+	[ModuleID] [int] NOT NULL,
+	[CreatedOnDate] [datetime] NULL,
+	[CreatedByUserID] [int] NOT NULL,
+	[LastModifiedByUserID] [int] NULL,
+	[LastModifiedOnDate] [datetime] NULL,
+	[PortalID] [int] NULL,
+ CONSTRAINT [aaaaaGIBS_Inventory_Suppliers_PK] PRIMARY KEY NONCLUSTERED 
+(
+	[SupplierID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+ALTER TABLE [dbo].[GIBS_Inventory_Invoices] ADD  DEFAULT ((0)) FOR [InvoiceNumber]
+GO
+
+ALTER TABLE [dbo].[GIBS_Inventory_LineItems] ADD  DEFAULT ((0)) FOR [Cases]
+GO
+
+ALTER TABLE [dbo].[GIBS_Inventory_LineItems] ADD  DEFAULT ((0)) FOR [CountPerCase]
+GO
+
+ALTER TABLE [dbo].[GIBS_Inventory_LineItems] ADD  DEFAULT ((0)) FOR [PricePerCase]
+GO
+
+ALTER TABLE [dbo].[GIBS_Inventory]  WITH NOCHECK ADD  CONSTRAINT [FK_GIBS_Inventory_Modules] FOREIGN KEY([ModuleID])
+REFERENCES [dbo].[Modules] ([ModuleID])
+ON DELETE CASCADE
+NOT FOR REPLICATION 
+GO
+
+ALTER TABLE [dbo].[GIBS_Inventory] CHECK CONSTRAINT [FK_GIBS_Inventory_Modules]
+GO
+
+ALTER TABLE [dbo].[GIBS_Inventory_Invoices]  WITH CHECK ADD  CONSTRAINT [FK_GIBS_Inventory_Invoices_Modules] FOREIGN KEY([ModuleID])
+REFERENCES [dbo].[Modules] ([ModuleID])
+ON DELETE CASCADE
+GO
+
+ALTER TABLE [dbo].[GIBS_Inventory_Invoices] CHECK CONSTRAINT [FK_GIBS_Inventory_Invoices_Modules]
+GO
+
+ALTER TABLE [dbo].[GIBS_Inventory_Invoices]  WITH CHECK ADD  CONSTRAINT [GIBS_Inventory_Invoices_FK00] FOREIGN KEY([SupplierID])
+REFERENCES [dbo].[GIBS_Inventory_Suppliers] ([SupplierID])
+GO
+
+ALTER TABLE [dbo].[GIBS_Inventory_Invoices] CHECK CONSTRAINT [GIBS_Inventory_Invoices_FK00]
+GO
+
+ALTER TABLE [dbo].[GIBS_Inventory_LineItems]  WITH CHECK ADD  CONSTRAINT [GIBS_Inventory_LineItems_FK00] FOREIGN KEY([InvoiceID])
+REFERENCES [dbo].[GIBS_Inventory_Invoices] ([InvoiceID])
+GO
+
+ALTER TABLE [dbo].[GIBS_Inventory_LineItems] CHECK CONSTRAINT [GIBS_Inventory_LineItems_FK00]
+GO
+
+ALTER TABLE [dbo].[GIBS_Inventory_ProductCategory]  WITH CHECK ADD  CONSTRAINT [FK_GIBS_Inventory_ProductCategory_Modules] FOREIGN KEY([ModuleID])
+REFERENCES [dbo].[Modules] ([ModuleID])
+ON DELETE CASCADE
+GO
+
+ALTER TABLE [dbo].[GIBS_Inventory_ProductCategory] CHECK CONSTRAINT [FK_GIBS_Inventory_ProductCategory_Modules]
+GO
+
+ALTER TABLE [dbo].[GIBS_Inventory_Products]  WITH CHECK ADD  CONSTRAINT [FK_GIBS_Inventory_Products_Modules] FOREIGN KEY([ModuleID])
+REFERENCES [dbo].[Modules] ([ModuleID])
+ON DELETE CASCADE
+GO
+
+ALTER TABLE [dbo].[GIBS_Inventory_Products] CHECK CONSTRAINT [FK_GIBS_Inventory_Products_Modules]
+GO
+
+ALTER TABLE [dbo].[GIBS_Inventory_Products]  WITH CHECK ADD  CONSTRAINT [GIBS_Inventory_Products_FK00] FOREIGN KEY([ProductCategoryID])
+REFERENCES [dbo].[GIBS_Inventory_ProductCategory] ([ProductCategoryID])
+GO
+
+ALTER TABLE [dbo].[GIBS_Inventory_Products] CHECK CONSTRAINT [GIBS_Inventory_Products_FK00]
+GO
+
+ALTER TABLE [dbo].[GIBS_Inventory_Suppliers]  WITH CHECK ADD  CONSTRAINT [FK_GIBS_Inventory_Suppliers_Modules] FOREIGN KEY([ModuleID])
+REFERENCES [dbo].[Modules] ([ModuleID])
+ON DELETE CASCADE
+GO
+
+ALTER TABLE [dbo].[GIBS_Inventory_Suppliers] CHECK CONSTRAINT [FK_GIBS_Inventory_Suppliers_Modules]
+GO
+
+
+
+
+/****** Object:  StoredProcedure [dbo].[GIBS_Inventory_Invoice_Delete]    Script Date: 4/22/2015 10:15:40 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+
+CREATE procedure [dbo].[GIBS_Inventory_Invoice_Delete]
+
+	@InvoiceID INT
+
+as
+
+BEGIN
+
+DELETE 
+FROM         GIBS_Inventory_LineItems
+WHERE     (InvoiceID = @InvoiceID)
+
+
+ 
+DELETE FROM GIBS_Inventory_Invoices
+WHERE     (InvoiceID = @InvoiceID)
+
+END
+
+
+GO
+
+/****** Object:  StoredProcedure [dbo].[GIBS_Inventory_Invoice_GetByID]    Script Date: 4/22/2015 10:15:40 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+CREATE procedure [dbo].[GIBS_Inventory_Invoice_GetByID]
+
+	@ModuleId int,
+	@InvoiceID int
+
+as
+
+BEGIN 
+
+	SELECT     InvoiceID, InvoiceNumber, InvoiceDate, 
+		
+		SupplierID,
+		ModuleID,  
+	GIBS_Inventory_Invoices.CreatedOnDate, GIBS_Inventory_Invoices.CreatedByUserID, 
+	GIBS_Inventory_Invoices.LastModifiedByUserID, GIBS_Inventory_Invoices.LastModifiedOnDate, PortalID,
+	'CreatedByUserName' = Users.FirstName + ' ' + Users.LastName
+	from GIBS_Inventory_Invoices
+	left outer join Users on GIBS_Inventory_Invoices.CreatedByUserID = Users.UserId
+	where  ModuleId = @ModuleId and InvoiceID = @InvoiceID
+
+END
+
+GO
+
+/****** Object:  StoredProcedure [dbo].[GIBS_Inventory_Invoice_GetInvoiceLineItems]    Script Date: 4/22/2015 10:15:40 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+CREATE procedure [dbo].[GIBS_Inventory_Invoice_GetInvoiceLineItems]
+
+	
+	@InvoiceID int
+
+as
+BEGIN
+
+SELECT     GIBS_Inventory_LineItems.LineItemID, GIBS_Inventory_LineItems.InvoiceID, 
+		GIBS_Inventory_LineItems.ProductID, GIBS_Inventory_LineItems.Cases, GIBS_Inventory_LineItems.CountPerCase, 
+        GIBS_Inventory_LineItems.PricePerCase, GIBS_Inventory_Products.ProductName, 
+        COALESCE(GIBS_Inventory_LineItems.WeightPerCase,0) AS WeightPerCase, 
+        (COALESCE(GIBS_Inventory_LineItems.PricePerCase, 0) * COALESCE(GIBS_Inventory_LineItems.Cases, 0)) as TotalCostExtended,
+        (COALESCE(GIBS_Inventory_LineItems.WeightPerCase, 0) * COALESCE(GIBS_Inventory_LineItems.Cases, 0)) AS TotalWeightPerCase,
+        ReportType
+        
+FROM         GIBS_Inventory_LineItems INNER JOIN
+                      GIBS_Inventory_Products ON GIBS_Inventory_LineItems.ProductID = GIBS_Inventory_Products.ProductID
+
+
+	where  InvoiceID = @InvoiceID 
+	Order by LineItemID 
+END
+
+GO
+
+/****** Object:  StoredProcedure [dbo].[GIBS_Inventory_Invoice_Insert]    Script Date: 4/22/2015 10:15:40 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+
+
+CREATE PROCEDURE [dbo].[GIBS_Inventory_Invoice_Insert] 
+	
+	 @InvoiceNumber NVARCHAR(50), 
+	 @InvoiceDate DATETIME,
+	 @SupplierID INT,
+	 
+	@CreatedByUserID INT, 
+	@ModuleId INT, 
+	@PortalID INT
+
+	 
+AS 
+BEGIN 
+	SET NOCOUNT ON;
+	
+
+INSERT INTO GIBS_Inventory_Invoices
+          (InvoiceNumber, 
+          InvoiceDate, 
+          SupplierID, 
+          ModuleID, 
+          CreatedOnDate, 
+          CreatedByUserID, 
+          PortalID)
+VALUES     (@InvoiceNumber,
+			@InvoiceDate,
+			@SupplierID,
+			@ModuleId,
+			GETDATE(),
+			@CreatedByUserID,
+			@PortalID)
+
+
+select SCOPE_IDENTITY()
+	
+END
+
+GO
+
+/****** Object:  StoredProcedure [dbo].[GIBS_Inventory_Invoice_List]    Script Date: 4/22/2015 10:15:40 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+CREATE procedure [dbo].[GIBS_Inventory_Invoice_List]
+
+	@ModuleId int
+
+as
+BEGIN 
+
+	SELECT     InvoiceID, InvoiceNumber, InvoiceDate, 
+	
+	GIBS_Inventory_Invoices.SupplierID,
+	GIBS_Inventory_Invoices.ModuleID, 
+	GIBS_Inventory_Invoices.CreatedOnDate, GIBS_Inventory_Invoices.CreatedByUserID, 
+	GIBS_Inventory_Invoices.LastModifiedByUserID, GIBS_Inventory_Invoices.LastModifiedOnDate, 
+	GIBS_Inventory_Invoices.PortalID,GIBS_Inventory_Suppliers.SupplierName,
+	'CreatedByUserName' = Users.FirstName + ' ' + Users.LastName
+	from GIBS_Inventory_Invoices
+	left outer join Users on GIBS_Inventory_Invoices.CreatedByUserID = Users.UserId
+	left outer join GIBS_Inventory_Suppliers on GIBS_Inventory_Invoices.SupplierID = GIBS_Inventory_Suppliers.SupplierID
+	where  GIBS_Inventory_Invoices.ModuleId = @ModuleId
+	order by InvoiceDate desc
+
+END
+
+GO
+
+/****** Object:  StoredProcedure [dbo].[GIBS_Inventory_Invoice_Update]    Script Date: 4/22/2015 10:15:40 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+
+
+CREATE PROCEDURE [dbo].[GIBS_Inventory_Invoice_Update] 
+	
+	@InvoiceID INT,
+	 @InvoiceNumber NVARCHAR(50), 
+	 @InvoiceDate DATETIME,
+	 @SupplierID INT,
+	@ModuleId INT,
+	@LastModifiedByUserID INT, 
+	@PortalID INT
+
+	 
+AS 
+BEGIN 
+	SET NOCOUNT ON;
+	
+
+UPDATE    GIBS_Inventory_Invoices
+SET              
+InvoiceNumber = @InvoiceNumber, 
+InvoiceDate = @InvoiceDate, 
+SupplierID = @SupplierID, 
+ModuleID = @ModuleId, 
+LastModifiedByUserID = 	@LastModifiedByUserID, 
+LastModifiedOnDate = GETDATE(), 
+PortalID = @PortalID
+
+   where  ModuleId = @ModuleId AND InvoiceID = @InvoiceID
+	
+END
+
+GO
+
+/****** Object:  StoredProcedure [dbo].[GIBS_Inventory_LineItems_Delete]    Script Date: 4/22/2015 10:15:40 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+CREATE procedure [dbo].[GIBS_Inventory_LineItems_Delete]
+
+	@LineItemID       int
+
+as
+
+BEGIN
+
+DELETE FROM GIBS_Inventory_LineItems
+WHERE     (LineItemID = @LineItemID)
+
+END
+
+GO
+
+/****** Object:  StoredProcedure [dbo].[GIBS_Inventory_LineItems_GetByID]    Script Date: 4/22/2015 10:15:40 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+CREATE procedure [dbo].[GIBS_Inventory_LineItems_GetByID]
+
+	@LineItemID int
+
+as
+
+BEGIN 
+
+SELECT     
+LineItemID,
+InvoiceID,
+ProductID,
+Cases,
+CountPerCase,
+PricePerCase,
+COALESCE(GIBS_Inventory_LineItems.WeightPerCase,0) AS WeightPerCase,
+ReportType
+from  GIBS_Inventory_LineItems
+
+where  LineItemID = @LineItemID 
+
+END
+
+GO
+
+/****** Object:  StoredProcedure [dbo].[GIBS_Inventory_LineItems_Insert]    Script Date: 4/22/2015 10:15:40 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+
+
+CREATE PROCEDURE [dbo].[GIBS_Inventory_LineItems_Insert] 
+	@InvoiceID INT, 
+	@ProductID NVARCHAR(50), 
+	@Cases INT, 
+	@CountPerCase INT,  
+	@PricePerCase MONEY,
+	@WeightPerCase float,
+	@ReportType varchar(20)
+
+	 
+AS 
+BEGIN 
+	SET NOCOUNT ON;
+	
+
+INSERT INTO GIBS_Inventory_LineItems
+                      ( 
+                      InvoiceID, 
+                      ProductID, 
+                      Cases, 
+                      CountPerCase, 
+                      PricePerCase,
+                      WeightPerCase,
+                      ReportType)
+VALUES     (@InvoiceID,
+@ProductID,
+@Cases,
+@CountPerCase,
+@PricePerCase,
+@WeightPerCase,
+@ReportType)
+
+
+	
+END
+
+GO
+
+/****** Object:  StoredProcedure [dbo].[GIBS_Inventory_LineItems_Update]    Script Date: 4/22/2015 10:15:40 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+CREATE PROCEDURE [dbo].[GIBS_Inventory_LineItems_Update] 
+	@LineItemID INT, 
+	@InvoiceID INT, 
+	@ProductID NVARCHAR(50), 
+	@Cases INT, 
+	@CountPerCase INT,  
+	@PricePerCase MONEY,
+	@WeightPerCase float,
+	@ReportType varchar(20)
+	 
+AS 
+BEGIN 
+	SET NOCOUNT ON;
+	
+UPDATE    GIBS_Inventory_LineItems
+SET              InvoiceID = @InvoiceID, 
+ProductID = @ProductID, 
+Cases =@Cases, 
+CountPerCase = @CountPerCase, 
+PricePerCase = @PricePerCase,
+WeightPerCase = @WeightPerCase,
+ReportType = @ReportType
+		
+		WHERE  LineItemID = @LineItemID
+	
+END
+
+GO
+
+/****** Object:  StoredProcedure [dbo].[GIBS_Inventory_ProductCategories_Insert]    Script Date: 4/22/2015 10:15:40 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+CREATE PROCEDURE [dbo].[GIBS_Inventory_ProductCategories_Insert] 
+	@CreatedByUserID INT, 
+	@ModuleId INT, 
+	@ProductCategory NVARCHAR(50), 	
+	@PortalID INT
+	 
+AS 
+BEGIN 
+	SET NOCOUNT ON;
+	
+
+insert into dbo.GIBS_Inventory_ProductCategory (
+	ProductCategory,
+	ModuleID,
+	CreatedOnDate,
+	CreatedByUserID,
+	lastModifiedByUserID,
+	LastModifiedOnDate,
+	PortalID
+) 
+values (
+	@ProductCategory,
+	@ModuleId,
+	GETDATE(),
+	@CreatedByUserID,
+	@CreatedByUserID,
+	GETDATE(),
+	@PortalID
+)
+	
+END
+
+GO
+
+/****** Object:  StoredProcedure [dbo].[GIBS_Inventory_ProductCategory_GetByID]    Script Date: 4/22/2015 10:15:40 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+CREATE procedure [dbo].[GIBS_Inventory_ProductCategory_GetByID]
+
+	@ModuleId int,
+	@ProductCategoryID int
+
+as
+
+SELECT     ProductCategoryID, ProductCategory,
+ ModuleID, 
+GIBS_Inventory_ProductCategory.CreatedOnDate, GIBS_Inventory_ProductCategory.CreatedByUserID, 
+GIBS_Inventory_ProductCategory.LastModifiedByUserID, GIBS_Inventory_ProductCategory.LastModifiedOnDate, PortalID,
+'CreatedByUserName' = Users.FirstName + ' ' + Users.LastName
+from GIBS_Inventory_ProductCategory
+left outer join Users on GIBS_Inventory_ProductCategory.CreatedByUserID = Users.UserId
+where  ModuleId = @ModuleId and ProductCategoryID = @ProductCategoryID
+
+GO
+
+/****** Object:  StoredProcedure [dbo].[GIBS_Inventory_ProductCategory_List]    Script Date: 4/22/2015 10:15:40 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+
+CREATE procedure [dbo].[GIBS_Inventory_ProductCategory_List]
+
+	@ModuleId int
+
+as
+
+SELECT     
+ProductCategoryID, ProductCategory, ModuleID, GIBS_Inventory_ProductCategory.CreatedOnDate, 
+GIBS_Inventory_ProductCategory.CreatedByUserID, GIBS_Inventory_ProductCategory.LastModifiedByUserID, 
+GIBS_Inventory_ProductCategory.LastModifiedOnDate, 
+PortalID, 
+'CreatedByUserName' = Users.FirstName + ' ' + Users.LastName,
+LastMod.FirstName + ' ' + LastMod.LastName AS 'LastModifiedByUserName'
+
+from dbo.GIBS_Inventory_ProductCategory
+left outer join Users on GIBS_Inventory_ProductCategory.CreatedByUserID = Users.UserId 
+
+              LEFT OUTER JOIN
+             Users AS LastMod ON GIBS_Inventory_ProductCategory.LastModifiedByUserID = LastMod.UserID
+             
+where  ModuleId = @ModuleId order by ProductCategory
+
+GO
+
+/****** Object:  StoredProcedure [dbo].[GIBS_Inventory_ProductCategory_Update]    Script Date: 4/22/2015 10:15:40 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+CREATE PROCEDURE [dbo].[GIBS_Inventory_ProductCategory_Update] 
+	@ProductCategoryID INT, 
+	@ModuleId INT, 
+	@ProductCategory NVARCHAR(50), 
+	@LastModifiedByUserID INT,
+	@PortalID INT
+	 
+AS 
+BEGIN 
+	SET NOCOUNT ON;
+	
+	UPDATE dbo.GIBS_Inventory_ProductCategory
+		SET 
+		ProductCategory = @ProductCategory,
+		LastModifiedByUserID = @LastModifiedByUserID,
+		LastModifiedOnDate = GETDATE(),
+		PortalID = @PortalID
+		
+		WHERE  ModuleId = @ModuleId
+		and ProductCategoryID = @ProductCategoryID;
+	
+END
+
+GO
+
+/****** Object:  StoredProcedure [dbo].[GIBS_Inventory_Products_Delete]    Script Date: 4/22/2015 10:15:40 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+
+CREATE procedure [dbo].[GIBS_Inventory_Products_Delete]
+
+	@ProductID INT
+
+as
+
+BEGIN
+
+UPDATE    GIBS_Inventory_Products
+SET              isActive = 0
+WHERE     (ProductID = @ProductID)
+
+
+
+END
+
+
+GO
+
+/****** Object:  StoredProcedure [dbo].[GIBS_Inventory_Products_GetByID]    Script Date: 4/22/2015 10:15:40 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+CREATE procedure [dbo].[GIBS_Inventory_Products_GetByID]
+
+	@ModuleId int,
+	@ProductID int
+
+as
+
+BEGIN
+
+	SELECT     ProductID, ProductName, CasePrice, 
+	CaseCount, GIBS_Inventory_Products.ProductCategoryID, GIBS_Inventory_ProductCategory.ProductCategory,
+	 GIBS_Inventory_Products.ModuleID, CaseWeight, 
+	GIBS_Inventory_Products.CreatedOnDate, GIBS_Inventory_Products.CreatedByUserID, 
+	GIBS_Inventory_Products.LastModifiedByUserID, GIBS_Inventory_Products.LastModifiedOnDate, GIBS_Inventory_Products.PortalID,
+	'CreatedByUserName' = Users.FirstName + ' ' + Users.LastName,
+	GIBS_Inventory_Products.isActive
+	from GIBS_Inventory_Products 
+	INNER JOIN
+	GIBS_Inventory_ProductCategory ON GIBS_Inventory_Products.ProductCategoryID = GIBS_Inventory_ProductCategory.ProductCategoryID
+
+	left outer join Users on GIBS_Inventory_Products.CreatedByUserID = Users.UserId
+	where  GIBS_Inventory_Products.ModuleId = @ModuleId and GIBS_Inventory_Products.ProductID = @ProductID
+
+END
+
+GO
+
+/****** Object:  StoredProcedure [dbo].[GIBS_Inventory_Products_Insert]    Script Date: 4/22/2015 10:15:40 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+CREATE PROCEDURE [dbo].[GIBS_Inventory_Products_Insert] 
+	
+	@ProductName NVARCHAR(500), 
+	@CasePrice money,
+	@CaseCount INT,
+	@ProductCategoryID INT,
+	@CreatedByUserID INT, 
+	@ModuleId INT, 
+	@PortalID INT,
+	@CaseWeight float,
+	@IsActive bit
+	 
+AS 
+BEGIN 
+	SET NOCOUNT ON;
+	
+
+insert into dbo.GIBS_Inventory_Products (
+	ProductName,
+	CasePrice,
+	CaseCount,
+	ProductCategoryID,
+	ModuleID,
+	CreatedOnDate,
+	CreatedByUserID,
+	PortalID,
+	CaseWeight,
+	IsActive
+) 
+values (
+	@ProductName,
+	@CasePrice,
+	@CaseCount,
+	@ProductCategoryID,
+	@ModuleId,
+	GETDATE(),
+	@CreatedByUserID,
+	@PortalID,
+	@CaseWeight,
+	@IsActive
+)
+
+select SCOPE_IDENTITY()
+	
+END
+
+GO
+
+/****** Object:  StoredProcedure [dbo].[GIBS_Inventory_Products_List]    Script Date: 4/22/2015 10:15:40 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+CREATE procedure [dbo].[GIBS_Inventory_Products_List]
+
+	@ModuleId int
+
+as
+BEGIN 
+
+	SELECT     GIBS_Inventory_Products.ProductID, GIBS_Inventory_Products.ProductName, 
+	GIBS_Inventory_Products.CasePrice, GIBS_Inventory_Products.CaseCount, GIBS_Inventory_Products.CaseWeight,
+	GIBS_Inventory_Products.ProductCategoryID, GIBS_Inventory_ProductCategory.ProductCategory,GIBS_Inventory_Products.ProductCategoryID,
+	GIBS_Inventory_Products.ModuleID, GIBS_Inventory_Products.CreatedOnDate, 
+	GIBS_Inventory_Products.CreatedByUserID, GIBS_Inventory_Products.LastModifiedByUserID, 
+	GIBS_Inventory_Products.LastModifiedOnDate, GIBS_Inventory_Products.PortalID, 
+	Users.FirstName + ' ' + Users.LastName AS 'CreatedByUserName',
+	LastMod.FirstName + ' ' + LastMod.LastName AS 'LastModifiedByUserName',
+	GIBS_Inventory_Products.IsActive,
+	GIBS_Inventory_ProductCategory.ProductCategory + ' - ' + GIBS_Inventory_Products.ProductName AS ProductNameDropdown
+                      
+FROM         GIBS_Inventory_Products 
+			INNER JOIN
+            GIBS_Inventory_ProductCategory ON GIBS_Inventory_Products.ProductCategoryID = GIBS_Inventory_ProductCategory.ProductCategoryID
+              
+              LEFT OUTER JOIN
+             Users AS LastMod ON GIBS_Inventory_Products.LastModifiedByUserID = LastMod.UserID
+                      
+              LEFT OUTER JOIN
+             Users AS Users ON GIBS_Inventory_Products.CreatedByUserID = Users.UserID
+WHERE     (GIBS_Inventory_Products.ModuleID = @ModuleId)
+ORDER BY GIBS_Inventory_ProductCategory.ProductCategory, GIBS_Inventory_Products.ProductName
+
+END
+
+GO
+
+/****** Object:  StoredProcedure [dbo].[GIBS_Inventory_Products_Update]    Script Date: 4/22/2015 10:15:40 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+
+CREATE PROCEDURE [dbo].[GIBS_Inventory_Products_Update] 
+	@ProductID INT,
+	@ProductName NVARCHAR(500), 
+	@CasePrice money,
+	@CaseCount INT,
+	@ProductCategoryID INT,
+	@ModuleId INT, 
+	@LastModifiedByUserID INT,
+	@PortalID INT,
+	@CaseWeight float,
+	@IsActive bit
+	 
+AS 
+BEGIN 
+	SET NOCOUNT ON;
+	
+	UPDATE dbo.GIBS_Inventory_Products
+		SET 
+		ProductName = @ProductName,
+		CasePrice = @CasePrice,
+		CaseCount = @CaseCount,
+		ProductCategoryID = @ProductCategoryID,
+		LastModifiedByUserID = @LastModifiedByUserID,
+		LastModifiedOnDate = GETDATE(),
+		PortalID = @PortalID,
+		CaseWeight = @CaseWeight,
+		IsActive = @IsActive
+		
+		WHERE  ModuleId = @ModuleId
+		and ProductID = @ProductID;
+	
+END
+
+
+GO
+
+/****** Object:  StoredProcedure [dbo].[GIBS_Inventory_RecordAdd]    Script Date: 4/22/2015 10:15:40 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+/*** EventsSignupsSave ***/
+
+CREATE PROCEDURE [dbo].[GIBS_Inventory_RecordAdd]
+(
+    @ProductID int,  
+    @ModuleID int, 
+    @ProductCount float,
+	@InventoryDate DateTime
+
+)
+AS
+BEGIN
+SET NOCOUNT ON;
+SET DATEFORMAT mdy;
+
+
+IF NOT EXISTS(SELECT * FROM [GIBS_Inventory] WHERE  [InventoryDate] = @InventoryDate AND [ProductID] = @ProductID)
+    BEGIN
+	   INSERT dbo.[GIBS_Inventory]
+		(
+			[ProductID],
+		[ProductCount]	,
+		[InventoryDate]	,
+		[ModuleID]	
+		)
+		VALUES
+		(
+			@ProductID,
+			@ProductCount,
+			@InventoryDate,		
+			@ModuleID
+		)
+    END
+	else
+	BEGIN
+
+	UPDATE [dbo].[GIBS_Inventory]
+   SET [ProductCount] = @ProductCount
+
+		WHERE  [InventoryDate] = @InventoryDate AND [ProductID] = @ProductID AND [ModuleID] = @ModuleID
+
+	END
+
+
+ 
+
+
+END
+GO
+
+/****** Object:  StoredProcedure [dbo].[GIBS_Inventory_Report]    Script Date: 4/22/2015 10:15:40 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE  [dbo].[GIBS_Inventory_Report] 
+( 
+	@StartDate datetime,
+	@EndDate datetime,
+	@ModuleID int
+)
+AS
+
+ 
+begin 
+
+-- DETAILS
+
+	declare @cols varchar(max)
+
+	select @cols = (
+	select distinct GIBS_Inventory.InventoryDate from GIBS_Inventory 
+	WHERE (GIBS_Inventory.InventoryDate  BETWEEN CONVERT(DATETIME, @StartDate, 102) AND CONVERT(DATETIME, @EndDate, 102)) for xml path('') ) 
+
+	select @cols = replace(@cols,'<InventoryDate>','[')
+	select @cols = replace(@cols,'</InventoryDate>', '],')
+	select @cols = left(@cols,len(@cols) -1)
+
+
+	declare @query varchar(max) 
+
+	select @query = 'select *
+	from 
+	(
+
+	  SELECT       GIBS_Inventory.InventoryDate, coalesce(GIBS_Inventory.ProductCount,0) AS ProductCount,  GIBS_Inventory_Products.ProductName AS [ProductName], GIBS_Inventory_Products.ProductCategoryID AS [CID]
+	FROM            GIBS_Inventory  INNER JOIN
+							 GIBS_Inventory_Products ON GIBS_Inventory.ProductID = GIBS_Inventory_Products.ProductID
+							 WHERE GIBS_Inventory_Products.IsActive = 1
+
+	) src
+	pivot
+	(
+	  max(ProductCount)
+	  for InventoryDate in (' + @cols + ')
+	) piv;'
+
+	--print @query
+	execute(@query)
+
+
+
+end
+GO
+
+/****** Object:  StoredProcedure [dbo].[GIBS_Inventory_Suppliers_GetByID]    Script Date: 4/22/2015 10:15:40 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+CREATE procedure [dbo].[GIBS_Inventory_Suppliers_GetByID]
+
+	@ModuleId int,
+	@SupplierID int
+
+as
+
+SELECT     SupplierID, SupplierName,  
+Address, City, State, Zip, 
+SupplierPhone, Salesman, 
+SalesmanPhone, ModuleID, 
+GIBS_Inventory_Suppliers.CreatedOnDate, GIBS_Inventory_Suppliers.CreatedByUserID, 
+GIBS_Inventory_Suppliers.LastModifiedByUserID, GIBS_Inventory_Suppliers.LastModifiedOnDate, PortalID,
+'CreatedByUserName' = Users.FirstName + ' ' + Users.LastName
+from GIBS_Inventory_Suppliers
+left outer join Users on GIBS_Inventory_Suppliers.CreatedByUserID = Users.UserId
+where  ModuleId = @ModuleId and SupplierID = @SupplierID
+
+GO
+
+/****** Object:  StoredProcedure [dbo].[GIBS_Inventory_Suppliers_Insert]    Script Date: 4/22/2015 10:15:40 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+CREATE PROCEDURE [dbo].[GIBS_Inventory_Suppliers_Insert] 
+	@CreatedByUserID INT, 
+	@ModuleId INT, 
+	@SupplierName NVARCHAR(50), 
+	
+	@Address NVARCHAR(50), 
+	@City NVARCHAR(50), 
+	@State NVARCHAR(50),
+	@Zip NVARCHAR(50),
+	@SupplierPhone NVARCHAR(50),
+	@Salesman NVARCHAR(50),
+	@SalesmanPhone NVARCHAR(50),
+	
+	@PortalID INT
+	 
+AS 
+BEGIN 
+	SET NOCOUNT ON;
+	
+
+insert into GIBS_Inventory_Suppliers (
+	SupplierName,
+	
+	Address,
+	City,
+	State,
+	Zip,
+	SupplierPhone,
+	Salesman,
+	SalesmanPhone,
+	ModuleID,
+	CreatedOnDate,
+	CreatedByUserID,
+	PortalID
+) 
+values (
+	@SupplierName,
+	
+	@Address,
+	@City,
+	@State,
+	@Zip,
+	@SupplierPhone,
+	@Salesman,
+	@SalesmanPhone,
+	@ModuleId,
+	GETDATE(),
+	@CreatedByUserID,
+	@PortalID
+)
+
+
+	
+END
+
+GO
+
+/****** Object:  StoredProcedure [dbo].[GIBS_Inventory_Suppliers_List]    Script Date: 4/22/2015 10:15:40 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+CREATE procedure [dbo].[GIBS_Inventory_Suppliers_List]
+
+	@ModuleId int
+
+as
+BEGIN 
+
+	SELECT     SupplierID, SupplierName,  
+	Address, City, State, Zip, 
+	SupplierPhone, Salesman, 
+	SalesmanPhone, ModuleID, 
+	GIBS_Inventory_Suppliers.CreatedOnDate, GIBS_Inventory_Suppliers.CreatedByUserID, 
+	GIBS_Inventory_Suppliers.LastModifiedByUserID, GIBS_Inventory_Suppliers.LastModifiedOnDate, PortalID,
+	'CreatedByUserName' = Users.FirstName + ' ' + Users.LastName
+	from GIBS_Inventory_Suppliers
+	left outer join Users on GIBS_Inventory_Suppliers.CreatedByUserID = Users.UserId
+	where  ModuleId = @ModuleId
+	order by SupplierName
+
+END
+
+GO
+
+/****** Object:  StoredProcedure [dbo].[GIBS_Inventory_Suppliers_Update]    Script Date: 4/22/2015 10:15:40 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+CREATE PROCEDURE [dbo].[GIBS_Inventory_Suppliers_Update] 
+	@SupplierID INT, 
+	@ModuleId INT, 
+	@SupplierName NVARCHAR(50), 
+	
+	@Address NVARCHAR(50), 
+	@City NVARCHAR(50), 
+	@State NVARCHAR(50),
+	@Zip NVARCHAR(50),
+	@SupplierPhone NVARCHAR(50),
+	@Salesman NVARCHAR(50),
+	@SalesmanPhone NVARCHAR(50),
+	@LastModifiedByUserID INT,
+	@PortalID INT
+	 
+AS 
+BEGIN 
+	SET NOCOUNT ON;
+	
+	UPDATE dbo.GIBS_Inventory_Suppliers
+		SET [ModuleId] = @ModuleId,
+		SupplierName = @SupplierName,
+		
+		[Address] = @Address,
+		City = @City,
+		[State] = @State,
+		Zip = @Zip,
+		SupplierPhone = @SupplierPhone,
+		Salesman = @Salesman,
+		SalesmanPhone = @SalesmanPhone,
+		LastModifiedByUserID = @LastModifiedByUserID,
+		LastModifiedOnDate = GETDATE(),
+		PortalID = @PortalID
+		
+		WHERE  ModuleId = @ModuleId
+		and SupplierID = @SupplierID;
+	
+END
+
+GO
+
+
+

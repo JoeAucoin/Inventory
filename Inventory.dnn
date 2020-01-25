@@ -1,0 +1,213 @@
+﻿<dotnetnuke type="Package" version="5.0">
+  <packages><package name="GIBS.Inventory" type="Module" version="1.0.0">
+  <friendlyName>GIBS - Inventory</friendlyName>
+  <description>DNN - Inventory Control</description>
+  <iconFile />
+  <owner>
+    <name>Joseph Aucoin</name>
+    <organization>GIBS</organization>
+    <url>www.gibs.com</url>
+    <email>dnn@gibs.net</email>
+  </owner>
+  <license>The license for this package is not currently included within the installation file, please check with the vendor for full license details.</license>
+  <releaseNotes />
+  <components>
+    <component type="Script">
+      <scripts>
+        <basePath>DesktopModules\GIBS\Inventory</basePath>
+        <script type="Install">
+          <path>SqlScripts</path>
+          <name>01.00.00.SqlDataProvider</name>
+          <version>01.00.00</version>
+        </script>
+        <script type="UnInstall">
+          <name>Uninstall.SqlDataProvider</name>
+          <version>1.0.0</version>
+        </script>
+      </scripts>
+    </component>
+    <component type="Module">
+      <desktopModule>
+        <moduleName>GIBS.Inventory</moduleName>
+        <foldername>GIBS/Inventory</foldername>
+        <businessControllerClass />
+        <supportedFeatures />
+        <moduleDefinitions>
+          <moduleDefinition>
+            <friendlyName>GIBS - Inventory</friendlyName>
+            <definitionName>GIBS - Inventory</definitionName>
+            <defaultCacheTime>0</defaultCacheTime>
+            <moduleControls>
+              <moduleControl>
+                <controlKey />
+                <controlSrc>DesktopModules/GIBS/Inventory/ViewInventory.ascx</controlSrc>
+                <supportsPartialRendering>False</supportsPartialRendering>
+                <controlTitle />
+                <controlType>View</controlType>
+                <iconFile />
+                <helpUrl />
+                <supportsPopUps>False</supportsPopUps>
+                <viewOrder>0</viewOrder>
+              </moduleControl>
+              <moduleControl>
+                <controlKey>InventoryReport</controlKey>
+                <controlSrc>desktopmodules/gibs/inventory/InventoryReport.ascx</controlSrc>
+                <supportsPartialRendering>False</supportsPartialRendering>
+                <controlTitle>Inventory Report</controlTitle>
+                <controlType>View</controlType>
+                <iconFile />
+                <helpUrl />
+                <supportsPopUps>False</supportsPopUps>
+                <viewOrder>1</viewOrder>
+              </moduleControl>
+              <moduleControl>
+                <controlKey>ProductCategories</controlKey>
+                <controlSrc>desktopmodules/gibs/inventory/ProductCategories.ascx</controlSrc>
+                <supportsPartialRendering>False</supportsPartialRendering>
+                <controlTitle>Product Categories</controlTitle>
+                <controlType>View</controlType>
+                <iconFile />
+                <helpUrl />
+                <supportsPopUps>False</supportsPopUps>
+                <viewOrder>2</viewOrder>
+              </moduleControl>
+              <moduleControl>
+                <controlKey>Products</controlKey>
+                <controlSrc>desktopmodules/gibs/inventory/Products.ascx</controlSrc>
+                <supportsPartialRendering>False</supportsPartialRendering>
+                <controlTitle>Manage Products</controlTitle>
+                <controlType>View</controlType>
+                <iconFile />
+                <helpUrl />
+                <supportsPopUps>False</supportsPopUps>
+                <viewOrder>0</viewOrder>
+              </moduleControl>
+              <moduleControl>
+                <controlKey>Settings</controlKey>
+                <controlSrc>desktopmodules/gibs/inventory/Settings.ascx</controlSrc>
+                <supportsPartialRendering>False</supportsPartialRendering>
+                <controlTitle>Module Settings</controlTitle>
+                <controlType>View</controlType>
+                <iconFile />
+                <helpUrl />
+                <supportsPopUps>False</supportsPopUps>
+                <viewOrder>1</viewOrder>
+              </moduleControl>
+              <moduleControl>
+                <controlKey>Suppliers</controlKey>
+                <controlSrc>desktopmodules/gibs/inventory/Suppliers.ascx</controlSrc>
+                <supportsPartialRendering>False</supportsPartialRendering>
+                <controlTitle>Manage Suppliers</controlTitle>
+                <controlType>View</controlType>
+                <iconFile />
+                <helpUrl />
+                <supportsPopUps>False</supportsPopUps>
+                <viewOrder>1</viewOrder>
+              </moduleControl>
+              <moduleControl>
+                <controlKey>TakeInventory</controlKey>
+                <controlSrc>desktopmodules/gibs/inventory/TakeInventory.ascx</controlSrc>
+                <supportsPartialRendering>False</supportsPartialRendering>
+                <controlTitle>Take Inventory</controlTitle>
+                <controlType>View</controlType>
+                <iconFile />
+                <helpUrl />
+                <supportsPopUps>False</supportsPopUps>
+                <viewOrder>1</viewOrder>
+              </moduleControl>
+            </moduleControls>
+          </moduleDefinition>
+        </moduleDefinitions>
+      </desktopModule>
+    </component>
+    <component type="Assembly">
+      <assemblies>
+        <basePath>bin</basePath>
+        <assembly>
+          <name>GIBS.Modules.Inventory.dll</name>
+        </assembly>
+      </assemblies>
+    </component>
+    <component type="File">
+      <files>
+        <basePath>DesktopModules\GIBS\Inventory</basePath>
+        <file>
+          <name>Inventory.dnn</name>
+        </file>
+        <file>
+          <path>Documentation</path>
+          <name>Documentation.css</name>
+        </file>
+        <file>
+          <path>Documentation</path>
+          <name>Documentation.html</name>
+        </file>
+        <file>
+          <path>Documentation</path>
+          <name>logo.gif</name>
+        </file>
+        <file>
+          <name>InventoryReport.ascx</name>
+        </file>
+        <file>
+          <path>JavaScript</path>
+          <name>jquery.maskedinput-1.3.js</name>
+        </file>
+        <file>
+          <name>ProductCategories.ascx</name>
+        </file>
+        <file>
+          <name>Products.ascx</name>
+        </file>
+        <file>
+          <name>Style.css</name>
+        </file>
+        <file>
+          <name>Suppliers.ascx</name>
+        </file>
+        <file>
+          <path>App_LocalResources</path>
+          <name>EditInventory.ascx.resx</name>
+        </file>
+        <file>
+          <path>App_LocalResources</path>
+          <name>Settings.ascx.resx</name>
+        </file>
+        <file>
+          <path>App_LocalResources</path>
+          <name>ViewInventory.ascx.resx</name>
+        </file>
+        <file>
+          <name>Settings.ascx</name>
+        </file>
+        <file>
+          <name>TakeInventory.ascx</name>
+        </file>
+        <file>
+          <name>ViewInventory.ascx</name>
+        </file>
+        <file>
+          <path>App_LocalResources</path>
+          <name>ProductCategories.ascx.resx</name>
+        </file>
+        <file>
+          <path>App_LocalResources</path>
+          <name>Products.ascx.resx</name>
+        </file>
+        <file>
+          <path>App_LocalResources</path>
+          <name>Suppliers.ascx.resx</name>
+        </file>
+        <file>
+          <path>App_LocalResources</path>
+          <name>TakeInventory.ascx.resx</name>
+        </file>
+        <file>
+          <path>App_LocalResources</path>
+          <name>InventoryReport.ascx.resx</name>
+        </file>
+      </files>
+    </component>
+  </components>
+</package></packages>
+</dotnetnuke>
