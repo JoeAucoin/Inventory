@@ -1,7 +1,7 @@
 ﻿<dotnetnuke type="Package" version="5.0">
-  <packages><package name="GIBS.Inventory" type="Module" version="1.0.0">
+  <packages><package name="GIBS.Inventory" type="Module" version="1.0.2">
   <friendlyName>GIBS - Inventory</friendlyName>
-  <description>DNN - Inventory Control</description>
+  <description>DNN - Inventory Control Module</description>
   <iconFile />
   <owner>
     <name>Joseph Aucoin</name>
@@ -22,7 +22,7 @@
         </script>
         <script type="UnInstall">
           <name>Uninstall.SqlDataProvider</name>
-          <version>1.0.0</version>
+          <version>1.0.2</version>
         </script>
       </scripts>
     </component>
