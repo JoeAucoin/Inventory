@@ -1,15 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Xml;
-using DotNetNuke;
 using DotNetNuke.Common.Utilities;
-using DotNetNuke.Entities.Modules;
-using DotNetNuke.Services.Search;
 using System.Data;
-using System.Dynamic;
-using System.Collections;
-using System.Data.SqlClient;
+
 
 namespace GIBS.Inventory.Components
 {
@@ -31,7 +25,8 @@ namespace GIBS.Inventory.Components
         /// <returns></returns>
         public InventoryInfo Suppliers_GetByID(int moduleId, int supplierID)
         {
-            return (InventoryInfo)CBO.FillObject(DataProvider.Instance().Suppliers_GetByID(moduleId, supplierID), typeof(InventoryInfo));
+        
+            return CBO.FillObject<InventoryInfo>(DataProvider.Instance().Suppliers_GetByID(moduleId, supplierID));
         }
 
 
@@ -91,7 +86,8 @@ namespace GIBS.Inventory.Components
 
         public InventoryInfo ProductCategory_GetByID(int moduleId, int productCategoryID)
         {
-            return (InventoryInfo)CBO.FillObject(DataProvider.Instance().ProductCategory_GetByID(moduleId, productCategoryID), typeof(InventoryInfo));
+         
+            return CBO.FillObject<InventoryInfo>(DataProvider.Instance().ProductCategory_GetByID(moduleId, productCategoryID));
         }
 
         public void ProductCategory_Update(InventoryInfo info)
@@ -121,7 +117,8 @@ namespace GIBS.Inventory.Components
 
         public InventoryInfo Products_GetByID(int moduleId, int productID)
         {
-            return (InventoryInfo)CBO.FillObject(DataProvider.Instance().Products_GetByID(moduleId, productID), typeof(InventoryInfo));
+       
+            return CBO.FillObject<InventoryInfo>(DataProvider.Instance().Products_GetByID(moduleId, productID));
         }
 
         public void Products_Update(InventoryInfo info)
@@ -172,7 +169,8 @@ namespace GIBS.Inventory.Components
 
         public InventoryInfo Invoice_GetByID(int moduleId, int invoiceID)
         {
-            return (InventoryInfo)CBO.FillObject(DataProvider.Instance().Invoice_GetByID(moduleId, invoiceID), typeof(InventoryInfo));
+          
+            return CBO.FillObject<InventoryInfo>(DataProvider.Instance().Invoice_GetByID(moduleId, invoiceID));
         }
 
         public void Invoice_Update(InventoryInfo info)
@@ -206,7 +204,8 @@ namespace GIBS.Inventory.Components
 
         public InventoryInfo LineItems_GetByID(int lineItemID)
         {
-            return (InventoryInfo)CBO.FillObject(DataProvider.Instance().LineItems_GetByID(lineItemID), typeof(InventoryInfo));
+          
+            return CBO.FillObject<InventoryInfo>(DataProvider.Instance().LineItems_GetByID(lineItemID));
         }
 
         public void LineItems_Update(InventoryInfo info)
@@ -273,31 +272,7 @@ namespace GIBS.Inventory.Components
         //    return list;
         //}
 
-        #region ISearchable Members
 
-        /// <summary>
-        /// Implements the search interface required to allow DNN to index/search the content of your
-        /// module
-        /// </summary>
-        /// <param name="modInfo"></param>
-        /// <returns></returns>
-        //public DotNetNuke.Services.Search.SearchItemInfoCollection GetSearchItems(ModuleInfo modInfo)
-        //{
-        //    SearchItemInfoCollection searchItems = new SearchItemInfoCollection();
-
-        //    List<InventoryInfo> infos = GetInventorys(modInfo.ModuleID);
-
-        //    foreach (InventoryInfo info in infos)
-        //    {
-        //        SearchItemInfo searchInfo = new SearchItemInfo(modInfo.ModuleTitle, info.Content, info.CreatedByUser, info.CreatedDate,
-        //                                            modInfo.ModuleID, info.ItemId.ToString(), info.Content, "Item=" + info.ItemId.ToString());
-        //        searchItems.Add(searchInfo);
-        //    }
-
-        //    return searchItems;
-        //}
-
-        #endregion
 
         #region IPortable Members
 

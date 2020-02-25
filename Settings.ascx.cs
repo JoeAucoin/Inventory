@@ -6,7 +6,7 @@ using GIBS.Inventory.Components;
 
 namespace GIBS.Modules.Inventory
 {
-    public partial class Settings : ModuleSettingsBase
+    public partial class Settings : InventorySettings
     {
 
         /// <summary>
@@ -19,11 +19,10 @@ namespace GIBS.Modules.Inventory
             {
                 if (!IsPostBack)
                 {
-                    InventorySettings settingsData = new InventorySettings(this.TabModuleId);
 
-                    if (settingsData.Template != null)
+                    if (Settings.Contains("Template"))
                     {
-                        txtTemplate.Text = settingsData.Template;
+                        txtTemplate.Text = Template.ToString();
                     }
                 }
             }
@@ -40,8 +39,8 @@ namespace GIBS.Modules.Inventory
         {
             try
             {
-                InventorySettings settingsData = new InventorySettings(this.TabModuleId);
-                settingsData.Template = txtTemplate.Text;
+
+                Template = txtTemplate.Text.ToString();
             }
             catch (Exception ex)
             {

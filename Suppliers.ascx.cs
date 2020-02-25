@@ -12,6 +12,7 @@ using DotNetNuke.Services.Localization;
 using DotNetNuke.Common;
 using DotNetNuke.Common.Lists;
 using GIBS.Inventory.Components;
+using DotNetNuke.Framework.JavaScriptLibraries;
 
 namespace GIBS.Modules.Inventory
 {
@@ -20,8 +21,9 @@ namespace GIBS.Modules.Inventory
         protected void Page_Load(object sender, EventArgs e)
         {
 
-            DotNetNuke.Framework.jQuery.RequestRegistration();
-            DotNetNuke.Framework.jQuery.RequestUIRegistration();
+            JavaScript.RequestRegistration(CommonJs.jQuery);
+            JavaScript.RequestRegistration(CommonJs.jQueryUI);
+
             Page.ClientScript.RegisterClientScriptInclude(this.GetType(), "InputMasks", (this.TemplateSourceDirectory + "/JavaScript/jquery.maskedinput-1.3.js"));
 
             if (!IsPostBack)
@@ -113,11 +115,10 @@ namespace GIBS.Modules.Inventory
 
             try
             {
-                ListController lc = new ListController();
-                ListEntryInfoCollection leic = lc.GetListEntryInfoCollection("Region", "Country.US");
+                var regions = new ListController().GetListEntryInfoItems("Region", "Country.US", this.PortalId);
                 ddlState.DataTextField = "Text";
                 ddlState.DataValueField = "Value";
-                ddlState.DataSource = leic;
+                ddlState.DataSource = regions;
                 ddlState.DataBind();
                 ddlState.Items.Insert(0, new ListItem("Select State", "-1"));
                 ddlState.SelectedValue = "MA";

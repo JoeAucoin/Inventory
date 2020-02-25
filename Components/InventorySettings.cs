@@ -18,45 +18,9 @@ namespace GIBS.Inventory.Components
     /// <summary>
     /// Provides strong typed access to settings used by module
     /// </summary>
-    public class InventorySettings
+    public class InventorySettings : ModuleSettingsBase
     {
-        ModuleController controller;
-        int tabModuleId;
-
-        public InventorySettings(int tabModuleId)
-        {
-            controller = new ModuleController();
-            this.tabModuleId = tabModuleId;
-        }
-
-        protected T ReadSetting<T>(string settingName, T defaultValue)
-        {
-            Hashtable settings = controller.GetTabModuleSettings(this.tabModuleId);
-
-            T ret = default(T);
-
-            if (settings.ContainsKey(settingName))
-            {
-                System.ComponentModel.TypeConverter tc = System.ComponentModel.TypeDescriptor.GetConverter(typeof(T));
-                try
-                {
-                    ret = (T)tc.ConvertFrom(settings[settingName]);
-                }
-                catch
-                {
-                    ret = defaultValue;
-                }
-            }
-            else
-                ret = defaultValue;
-
-            return ret;
-        }
-
-        protected void WriteSetting(string settingName, string value)
-        {
-            controller.UpdateTabModuleSetting(this.tabModuleId, settingName, value);
-        }
+        
 
         #region public properties
 
@@ -66,8 +30,17 @@ namespace GIBS.Inventory.Components
         /// </summary>
         public string Template
         {
-            get { return ReadSetting<string>("template", null); }
-            set { WriteSetting("template", value); }
+            get
+            {
+                if (Settings.Contains("Template"))
+                    return Settings["Template"].ToString();
+                return "";
+            }
+            set
+            {
+                var mc = new ModuleController();
+                mc.UpdateModuleSetting(ModuleId, "Template", value.ToString());
+            }
         }
 
 

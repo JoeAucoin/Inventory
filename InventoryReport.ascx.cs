@@ -32,11 +32,9 @@ namespace GIBS.Modules.Inventory
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            DotNetNuke.Framework.jQuery.RequestRegistration();
-            DotNetNuke.Framework.jQuery.RequestUIRegistration();
-
-            //JavaScript.RequestRegistration(CommonJs.jQuery);
-            //JavaScript.RequestRegistration(CommonJs.jQueryUI);
+            
+            JavaScript.RequestRegistration(CommonJs.jQuery);
+            JavaScript.RequestRegistration(CommonJs.jQueryUI);
             Page.ClientScript.RegisterClientScriptInclude(this.GetType(), "InputMasks", (this.TemplateSourceDirectory + "/JavaScript/jquery.maskedinput-1.3.js"));
 
 
